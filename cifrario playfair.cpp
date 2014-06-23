@@ -9,6 +9,7 @@ const int x=5,y=5;
 char matrice[x][y];
 
 //questa funzione sostituisce con una i tutte le j che trova
+//here we are replacing "j"s with "i"s
 string sostituiscij(string stringa){
     for (int i=0;i<stringa.length();i++){
         if (stringa[i]=='j')
@@ -19,6 +20,7 @@ string sostituiscij(string stringa){
 }
 
 //questa funzione filtra la chiave togliendo le ripetizioni delle lettere
+//here we are filtering the key by removing the char repetitions.
 string filtrachiave(string key){
     int m=key.length();
     char vettore[m];
@@ -46,6 +48,7 @@ string filtrachiave(string key){
 }
 
 //questa funzione aggiunge il resto dell'alfabeto alla chiave, per poi essere messa nella matrice
+//here we are adding the rest of the alphabet to the key, then we will call the filter function to remove the duplicates..
 string aggiungealfabeto(string key){
     string alfabeto="abcdefghiklmnopqrstuvwxyz";
     key=key+alfabeto;
@@ -54,6 +57,7 @@ string aggiungealfabeto(string key){
 }
 
 //questa funzione modifica il messaggio da cifrare separando le doppie
+//here we are editing the message splitting the couples 
 string filtramessaggio(string messaggio){
     string mex="";
     int l=messaggio.length();
@@ -65,7 +69,7 @@ string filtramessaggio(string messaggio){
         else
             mex=messaggio;
     }
-    //ora se il messaggio è di lunghezza dispari, bisogna agigungere una x alla fine
+    //ora se il messaggio ï¿½ di lunghezza dispari, bisogna agigungere una x alla fine
     if (mex.length() % 2 != 0)
         mex=mex+"x";
 
@@ -73,6 +77,7 @@ string filtramessaggio(string messaggio){
 }
 
 //questa funzione trova le coordinate di dove sono le coppie di lettere all'interno della matrice
+//here we are finding the coords of the couples inside of the matrix
 string identificazione(char prima,char seconda,bool codifica){
     int px,py,sx,sy=sx=py=px=-1;
     for(int i=0; i<x;i++){
@@ -88,7 +93,7 @@ string identificazione(char prima,char seconda,bool codifica){
         }
     }
     string lettera1,lettera2;
-    if (codifica==true){//se si sta codificando un messaggio
+    if (codifica==true){//se si sta codificando un messaggio. If we are coding a text
         if (px==sx){
             py==4?lettera1=matrice[px][0]:lettera1=matrice[px][py+1];
             sy==4?lettera2=matrice[sx][0]:lettera2=matrice[sx][sy+1];
@@ -104,7 +109,7 @@ string identificazione(char prima,char seconda,bool codifica){
             lettera2=matrice[sx][py];
         }
     }
-    else{//se si sta decodificando un messaggio
+    else{//se si sta decodificando un messaggio. If we are decoding a text
         if (px==sx){
             py==0?lettera1=matrice[px][4]:lettera1=matrice[px][py-1];
             sy==0?lettera2=matrice[sx][4]:lettera2=matrice[sx][sy-1];
@@ -125,6 +130,7 @@ string identificazione(char prima,char seconda,bool codifica){
 }
 
 //questa funzione toglie le lettere separatrici e restituisce la parola in chiaro
+//here we are re-compising the original text
 string ricomponimessaggio(string messaggio){
     int l=messaggio.length();
     for (int i=1;i<l;i++)
@@ -137,13 +143,15 @@ string ricomponimessaggio(string messaggio){
 
 int main(){
     string chiave,k;
-    cout<<"Inserisci la chiave del cifrario\nPer una corretta cifratura, immettere solo caratteri alfabetici\n";
+    //cout<<"Inserisci la chiave del cifrario\nPer una corretta cifratura, immettere solo caratteri alfabetici\n";
+    cout<<"Write down the cipher key.\nFor a better encoding, write down only alphabetical chars\n";
     getline(cin,chiave);
     for(int i=0;i<chiave.length();i++)
         chiave[i]=tolower(chiave[i]);
     chiave=sostituiscij(chiave);
     k=filtrachiave(chiave);
-    cout<<"----------------------------------\nchiave filtrata:\n\n"
+    //cout<<"----------------------------------\nchiave filtrata:\n\n"
+    cout<<"----------------------------------\nFiltered key:\n\n"
         <<k<<"\n\n---------------------\n";
     k=aggiungealfabeto(k);
     int inc=-1;
@@ -152,7 +160,8 @@ int main(){
             inc++;
             matrice[i][j]=k[inc];
         }
-    cout<<"Matrice generata:"<<endl<<endl;
+    //cout<<"Matrice generata:"<<endl<<endl;
+    cout<<"Generated Matrix:"<<endl<<endl;
     for(int i=0;i<x;i++){
         for(int j=0;j<y;j++)
             cout<<matrice[i][j]<<" ";
@@ -161,10 +170,13 @@ int main(){
     cout<<"\n----------------------------------\n";
     string risp,messaggio;
     do{
-        cout<<"Digita 1 se vuoi cifrare un messaggio\nDigita 2 se vuoi decifrare un messaggio\nDigita 3 per uscire\n";
+        //cout<<"Digita 1 se vuoi cifrare un messaggio\nDigita 2 se vuoi decifrare un messaggio\nDigita 3 per uscire\n";
+        cout<<"Press 1 if you want encoding a text\nPress 2 if you want decode a text\nPress 3 if you want exit\n";
+
         cin>>risp;
         if (risp=="1"){
-            cout<<"Ora inserisci il messaggio da codificare.\nPer una corretta cifratura, immettere solo caratteri alfabetici(spazi esclusi)\n";
+            //cout<<"Ora inserisci il messaggio da codificare.\nPer una corretta cifratura, immettere solo caratteri alfabetici(spazi esclusi)\n";
+            cout<<"Write down the text you want encode.\nFor a better encoding, write down only alphabetical chars. (spaces excluded)\n";
             cin>>messaggio;
             for(int i=0;i<messaggio.length();i++)
                 messaggio[i]=tolower(messaggio[i]);
@@ -172,13 +184,15 @@ int main(){
             string m=filtramessaggio(messaggio), parola="";
             for(int i=1;i<m.length();i+=2)
                 parola=parola+identificazione(m[i-1],m[i],true);
-            cout<<"\n----------------------------------\nMessaggio codificato:\n\n"
+            //cout<<"\n----------------------------------\nMessaggio codificato:\n\n"
+            cout<<"\n----------------------------------\nEncoded text:\n\n"
                 <<parola<<"\n----------------------------------\n";
         }
         else
         if (risp=="2"){
                 string m;
-                cout<<"Ora inserisci il messaggio da decodificare.\nPer una corretta cifratura, immettere solo caratteri alfabetici(spazi esclusi)\n";
+                //cout<<"Ora inserisci il messaggio da decodificare.\nPer una corretta cifratura, immettere solo caratteri alfabetici(spazi esclusi)\n";
+                cout<<"Write down the text you want decode.\nFor a better encoding, write down only alphabetical chars. (spaces excluded)\n";
                 cin>>m;
                 for(int i=0;i<m.length();i++)
                     m[i]=tolower(m[i]);
@@ -187,7 +201,8 @@ int main(){
                 for(int i=1;i<m.length();i+=2){
                     parola=parola+identificazione(m[i-1],m[i],false);
             }
-            cout<<"\n----------------------------------\nMessaggio decodificato:\n\n"
+            //cout<<"\n----------------------------------\nMessaggio decodificato:\n\n"
+            cout<<"\n----------------------------------\nDecoded text:\n\n"
                 <<ricomponimessaggio(parola)<<"\n----------------------------------\n";
         }
         else
